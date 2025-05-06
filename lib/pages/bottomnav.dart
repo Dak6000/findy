@@ -1,9 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:test/pages/booking.dart';
-import 'package:test/pages/cart.dart';
 import 'package:test/pages/home.dart';
-import 'package:test/pages/profile.dart';
+import 'package:test/pages/download.dart';
+import 'package:test/pages/work.dart';
+import 'package:test/pages/mentors.dart';
+import 'package:test/pages/settings.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -13,44 +14,41 @@ class BottomNav extends StatefulWidget {
 }
 
 class _BottomNavState extends State<BottomNav> {
-  int currentTabIndex = 0;
-  late List<Widget> pages;
-
-  late Widget currentPage;
-  late Home home;
-  late Booking booking;
-  late Profile profile;
-  late Cart cart;
+  int currentTabIndex = 2; // Index initial au centre (Home)
 
   @override
   void initState() {
-    home = Home();
-    booking = Booking();
-    profile = Profile();
-    cart = Cart();
-    pages = [home, cart, booking, profile];
-    currentPage = Home();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> pages = [
+      Download(),
+      Work(),
+      Home(),
+      Mentors(),
+      Settings(),
+    ];
+
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
-        height: 65,
+        index: currentTabIndex, // Définit l'index initial au lancement
+        height: 50,
         backgroundColor: Colors.white,
-        color: Colors.black,
-        animationDuration: Duration(milliseconds: 500),
+        color: const Color(0xffff734c),
+        animationDuration: const Duration(milliseconds: 500),
         onTap: (int index) {
           setState(() {
             currentTabIndex = index;
           });
         },
-        items: [
-          Icon(Icons.home_outlined, color: Colors.white, size: 30.0,),
-          Icon(Icons.shopping_cart_outlined, color: Colors.white, size: 30.0,),
-          Icon(Icons.shopping_bag_outlined, color: Colors.white, size: 30.0,),
-          Icon(Icons.person_outline, color: Colors.white, size: 30.0,),
+        items: const [
+          Icon(Icons.download_outlined, color: Colors.white, size: 30.0),
+          Icon(Icons.work_history_outlined, color: Colors.white, size: 30.0),
+          Icon(Icons.home_outlined, color: Colors.white, size: 30.0),
+          Icon(Icons.person_outline, color: Colors.white, size: 30.0),
+          Icon(Icons.settings_outlined, color: Colors.white, size: 30.0),
         ],
       ),
       body: pages[currentTabIndex],
